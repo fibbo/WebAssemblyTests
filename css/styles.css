@@ -1,0 +1,17 @@
+body {
+  font-size: 22px;
+  font-family: "Perpetua", sans-serif;
+}
+
+h1 {
+  font-size: 40px;
+  color: rgb(0, 139, 210);
+  text-decoration: underline;
+  font-family: "Fira Sans";
+}
+
+a {
+  font-size: 20px;
+  color: rgb(0, 139, 210);
+  font-family: "Fira Sans";
+}

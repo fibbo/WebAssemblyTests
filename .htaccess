@@ -1,0 +1,7 @@
+AddType application/octet-stream ".mem"
+AddType application/octet-stream ".data" 
+AddType application/x-font-woff  ".woff"
+AddType application/wasm         .wasm
+AddType image/svg+xml            ".svg"
+
+AddOutputFilterByType DEFLATE application/wasm

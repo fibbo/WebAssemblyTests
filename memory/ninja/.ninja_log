@@ -1,0 +1,11 @@
+# ninja log v5
+10	591	573062405	CMakeFiles/datastruct.dir/datastruct.cpp.o	935d5e2b5c955b32
+0	975	573062406	CMakeFiles/memory.dir/memory_test.cpp.o	b01a029e3a4ad357
+592	1984	573062405	libdatastruct.bc	7195363534ebf9de
+976	5882	573062406	libmemory.bc	6db85210f7f778fd
+0	13	0	clean	6b7dc13e93c26e59
+7	607	573062675	CMakeFiles/datastruct.dir/datastruct.cpp.o	935d5e2b5c955b32
+1	910	573062675	CMakeFiles/memory.dir/memory_test.cpp.o	b01a029e3a4ad357
+607	1832	573062675	libdatastruct.bc	7195363534ebf9de
+911	5630	573062675	libmemory.bc	6db85210f7f778fd
+1	1761	573070065	build.ninja	b908e929666a1169

@@ -1,0 +1,6 @@
+# ninja log v5
+1	757	573070275	CMakeFiles/copy.dir/copy.cpp.o	75297a0f4e5786ca
+1	1756	573070402	build.ninja	60b071c962894e95
+2	746	573070402	CMakeFiles/copy.dir/copy.cpp.o	75297a0f4e5786ca
+0	1728	573070439	build.ninja	60b071c962894e95
+1	3969	573070440	libcopy.bc	5165686cfb8cac9d

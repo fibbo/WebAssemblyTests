@@ -1,0 +1,10 @@
+E:/tmp/emscripten_module_test/ninja/CMakeFiles/empty.dir
+E:/tmp/emscripten_module_test/ninja/CMakeFiles/edit_cache.dir
+E:/tmp/emscripten_module_test/ninja/CMakeFiles/rebuild_cache.dir
+E:/tmp/emscripten_module_test/ninja/bin/memory/CMakeFiles/memory.dir
+E:/tmp/emscripten_module_test/ninja/bin/memory/CMakeFiles/edit_cache.dir
+E:/tmp/emscripten_module_test/ninja/bin/memory/CMakeFiles/datastruct.dir
+E:/tmp/emscripten_module_test/ninja/bin/memory/CMakeFiles/rebuild_cache.dir
+E:/tmp/emscripten_module_test/ninja/bin/copy/CMakeFiles/copy.dir
+E:/tmp/emscripten_module_test/ninja/bin/copy/CMakeFiles/edit_cache.dir
+E:/tmp/emscripten_module_test/ninja/bin/copy/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,21 @@
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script>
+    var Module = Module !== undefined ? Module : {}
+    Module['onRuntimeInitialized'] = () =>
+    {
+        Module.dynamicLibraries = ['side_module.wasm']
+       
+    }
+  </script>
+  <script type="text/javascript" src="modules/bin/main.js"></script>
+
+</head>
+<body>
+    <h1>Modules: Main Module and Side Module </h1>
+    The main model should call a function from the side model.
+</body>
+</html>

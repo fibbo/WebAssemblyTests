@@ -1,0 +1,45 @@
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    console.log("running copy example")
+    var Module = Module !== undefined ? Module : {}
+    Module['onRuntimeInitialized'] = () =>
+    {
+
+        const SAMPLES = 100
+        // var memory = Module.wasmMemory
+        // var ptr = Module._malloc(64)
+        const length = 50000;
+        const size = 1;
+
+
+
+        console.time('copy')
+        for (var k = 0; k < SAMPLES; k++)
+        {
+            var array = new Uint8Array(length);
+            var array = Module.initVector(array);
+        }
+        console.timeEnd('copy')
+
+        console.time('buffer')
+        for (var k = 0; k < SAMPLES; k++)
+        {
+            const handle = Module._malloc(size*length);
+            Module.initBuffer(handle, length)
+            let wasmArray = new Uint8Array(Module.HEAP8.buffer, handle, length)
+            Module._free(handle)    
+        }
+        console.timeEnd('buffer')
+    }
+  </script>
+  <script type="text/javascript" src="copy/bin/copy.js"></script>
+
+</head>
+<body>
+    <h1>Copy example</h1>
+    Compare performance of creating arrays in javascript, passing to emscripten and back to javascript vs creating arrays on the heap and work on the emscripten memory.
+</body>
+</html>

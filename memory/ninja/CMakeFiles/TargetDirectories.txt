@@ -1,0 +1,4 @@
+E:/tmp/emscripten_module_test/memory/ninja/CMakeFiles/memory.dir
+E:/tmp/emscripten_module_test/memory/ninja/CMakeFiles/edit_cache.dir
+E:/tmp/emscripten_module_test/memory/ninja/CMakeFiles/datastruct.dir
+E:/tmp/emscripten_module_test/memory/ninja/CMakeFiles/rebuild_cache.dir
