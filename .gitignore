@@ -1,3 +1,4 @@
 bin/
 ninja/
 build/
+.vscode/
