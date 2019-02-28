@@ -10,15 +10,14 @@ set_target_properties(
     main
     side_module
     PROPERTIES SUFFIX ".bc" CXX_STANDARD 11)
-
+set($ENV{EMCC_FORCE_STDLIBS} 1)
 add_custom_command(TARGET main
     POST_BUILD
     COMMAND emcc
     -s ALLOW_MEMORY_GROWTH=1
     -s FORCE_FILESYSTEM=1
-    -s EXPORT_ALL=1
-    --bind
-    -O2 libmain.bc
+    -s MAIN_MODULE=1
+    libmain.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/main.js
 )
 
@@ -27,7 +26,7 @@ add_custom_command(TARGET side_module
     COMMAND emcc
     -s SIDE_MODULE=1
     -s EXPORT_ALL=1
-    --bind
+    -g4
     libside_module.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/side_module.wasm
 )

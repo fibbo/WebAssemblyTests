@@ -5,9 +5,22 @@
 
   <script>
     var Module = Module !== undefined ? Module : {}
+    
+    
+    Module.dynamicLibraries = ['modules/bin/side_module.wasm']
     Module['onRuntimeInitialized'] = () =>
     {
-        Module.dynamicLibraries = ['side_module.wasm']
+      console.log('runtime initialized')
+
+      // FS.mkdir('/')
+      // FS.syncfs(IDBFS, {}, '/')
+      // FS.syncfs(true, function (err) {
+      //           if (!err) {
+      //               resolve();
+      //           } else {
+      //               reject("Failed to load IDBFS: " + err);
+      //           }
+      //       });
        
     }
   </script>
