@@ -28,7 +28,7 @@ add_custom_command(TARGET side_module
     -s SIDE_MODULE=1
     -s EXPORT_ALL=1
     --bind
-    libmodule.bc
+    libside_module.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/side_module.wasm
 )
 
