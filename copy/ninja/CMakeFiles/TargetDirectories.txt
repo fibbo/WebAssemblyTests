@@ -1,3 +1,0 @@
-E:/tmp/emscripten_module_test/copy/ninja/CMakeFiles/copy.dir
-E:/tmp/emscripten_module_test/copy/ninja/CMakeFiles/edit_cache.dir
-E:/tmp/emscripten_module_test/copy/ninja/CMakeFiles/rebuild_cache.dir
