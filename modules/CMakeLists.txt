@@ -14,11 +14,10 @@ set_target_properties(
 add_custom_command(TARGET main
     POST_BUILD
     COMMAND emcc
-    -s ALLOW_MEMORY_GROWTH=1
-    -s FORCE_FILESYSTEM=1
-    -s EXPORT_ALL=1
+    -s ERROR_ON_UNDEFINED_SYMBOLS=0
+    -s MAIN_MODULE=1
     --bind
-    -O2 libmain.bc
+    libmain.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/main.js
 )
 
@@ -27,7 +26,6 @@ add_custom_command(TARGET side_module
     COMMAND emcc
     -s SIDE_MODULE=1
     -s EXPORT_ALL=1
-    --bind
     libside_module.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/side_module.wasm
 )

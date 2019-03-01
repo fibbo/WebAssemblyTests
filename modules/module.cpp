@@ -1,18 +1,12 @@
-#include <emscripten.h>
-#include "emscripten/bind.h"
-using namespace emscripten;
+#ifdef _WIN32
+#  define EXPORT __declspec(dllexport)
+#  define IMPORT __declspec(dllimport)
+#else
+#  define EXPORT __attribute__ ((visibility ("default")))
+#  define IMPORT __attribute__ ((visibility ("default")))
+#endif
 
-emscripten::val setVectorData(emscripten::val vec)
-{
-    std::vector<double> vector = vec.isNull() ? std::vector<double>() : emscripten::vecFromJSArray<double>(vec);
-    for (int i = 0; i < vector.size(); i++)
-    {
-        vector[i] = 3000+i;
-    }
-    return emscripten::val(vector);
-}
-
-void setBufferData(long handle, int length)
+EXPORT void setBufferData(long handle, int length)
 {
     unsigned char* data = (unsigned char*) handle;
     for (int i = 0; i<length; i++)
@@ -21,7 +15,7 @@ void setBufferData(long handle, int length)
     }
 }
 
-EMSCRIPTEN_BINDINGS() {
-    function("setVectorData", &setVectorData);
-    function("setBufferData", &setBufferData);
+EXPORT int sidey()
+{
+    return 23;
 }
