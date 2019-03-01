@@ -5,23 +5,14 @@
 
   <script>
     var Module = Module !== undefined ? Module : {}
-    
-    
     Module.dynamicLibraries = ['modules/bin/side_module.wasm']
     Module['onRuntimeInitialized'] = () =>
     {
-      console.log('runtime initialized')
-
-      // FS.mkdir('/')
-      // FS.syncfs(IDBFS, {}, '/')
-      // FS.syncfs(true, function (err) {
-      //           if (!err) {
-      //               resolve();
-      //           } else {
-      //               reject("Failed to load IDBFS: " + err);
-      //           }
-      //       });
-       
+        console.log('onruntimeinitialized')
+        const handle = Module._malloc(1000)
+        Module.setBufferData(handle, 1000)
+        let wasmArray = new Uint8Array(Module.HEAP8.buffer, handle, 1000)
+        console.log(wasmArray)
     }
   </script>
   <script type="text/javascript" src="modules/bin/main.js"></script>

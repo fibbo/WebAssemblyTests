@@ -1,0 +1,34 @@
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script>
+    var Module = Module !== undefined ? Module : {}
+    Module.dynamicLibraries = ['modules_advanced/bin/side_module.wasm', 'modules_advanced/bin/side_module2.wasm']
+    Module['onRuntimeInitialized'] = () =>
+    {
+        console.log('onruntimeinitialized')
+        // Module.interFunctionCalls(2000)
+        FS.mkdir('/modules');
+        FS.mount(IDBFS, {}, '/modules');
+        FS.syncfs(true, function (err) {
+            if (!err) {
+                resolve();
+            } else {
+                reject("Failed to load IDBFS: " + err);
+            }
+        });
+
+        Module.runDataStructureTestWithinModule()
+        Module.runDataStructureTestAcrossModules()
+    }
+  </script>
+  <script type="text/javascript" src="modules_advanced/bin/main.js"></script>
+
+</head>
+<body>
+    <h1>Modules: Main Module and Side Module </h1>
+    The main module calls creates object DataStruct and calls a fillDataStructure from module. fillDataStructure then calls setBoolToFalse in module2. 
+</body>
+</html>

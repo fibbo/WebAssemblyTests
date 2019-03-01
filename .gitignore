@@ -2,3 +2,6 @@ bin/
 ninja/
 build/
 .vscode/
+CMakeFiles/
+CMakeCache.txt
+*.ninja*
