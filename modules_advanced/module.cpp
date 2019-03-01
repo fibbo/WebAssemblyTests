@@ -1,6 +1,7 @@
 #include "header.h"
 
 extern void setBoolToFalse(DataStruct& ds);
+extern DataStruct* createDataStruct();
 
 void fillDataStructure(DataStruct& ds)
 {
@@ -9,4 +10,10 @@ void fillDataStructure(DataStruct& ds)
         ds.bitmap[i] = i % 256;
     }
     setBoolToFalse(ds);
+}
+
+    
+DataStruct* getDataStructureFromModule()
+{
+    return createDataStruct();
 }

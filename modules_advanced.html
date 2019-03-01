@@ -9,8 +9,19 @@
     Module['onRuntimeInitialized'] = () =>
     {
         console.log('onruntimeinitialized')
-        Module.interFunctionCalls(2000)
+        // Module.interFunctionCalls(2000)
+        FS.mkdir('/modules');
+        FS.mount(IDBFS, {}, '/modules');
+        FS.syncfs(true, function (err) {
+            if (!err) {
+                resolve();
+            } else {
+                reject("Failed to load IDBFS: " + err);
+            }
+        });
 
+        Module.runDataStructureTestWithinModule()
+        Module.runDataStructureTestAcrossModules()
     }
   </script>
   <script type="text/javascript" src="modules_advanced/bin/main.js"></script>

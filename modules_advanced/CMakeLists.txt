@@ -20,6 +20,7 @@ add_custom_command(TARGET main
     -s ALLOW_MEMORY_GROWTH=1
     -s ERROR_ON_UNDEFINED_SYMBOLS=0
     -s MAIN_MODULE=1
+    -s EXPORT_ALL=1
     --bind
     libmain.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/main.js
