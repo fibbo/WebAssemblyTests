@@ -7,6 +7,6 @@ struct DataStruct
     std::string text;
     void print()
     {
-        printf("%d %d %s\n", x, y, text.c_str());
+        printf("x: %d y: %d text: %s\n", x, y, text.c_str());
     }
 };

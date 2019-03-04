@@ -10,7 +10,7 @@ class MyClass {
 public:
   MyClass(int x, std::string y)
     : x(x)
-    , y(y)
+    , text(y)
   {}
 
   void incrementX() {
@@ -21,17 +21,17 @@ public:
   void setX(int x_) { x = x_; }
   void print()
   {
-    std::cout << x << "\t" << y << '\n';
+    std::cout << "x: " << x << "\t" << text << '\n';
   } 
 
 
   static std::string getStringFromInstance(const MyClass& instance) {
-    return instance.y;
+    return instance.text;
   }
 
 private:
   int x;
-  std::string y;
+  std::string text;
 };
 
 void setXRef(MyClass& c, int x)

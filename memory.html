@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8"/>
@@ -19,12 +20,16 @@
         myclass.print()
 
         // call function that takes MyClass object by value and thus copying it
-        Module.setXNoRef(myclass, 45)
+        console.log('Set x to 45. Passing myclass as value');
+        Module.setXNoRef(myclass, 45);
         // print the x value of the object - should be unchanged
+        console.log('Print myclass after setting X')
         myclass.print()
         // call function that takes MyClass object by reference
+        console.log('Set x to 45. Passing myclass as reference');
         Module.setXRef(myclass, 45)
         // print the x value of the object - it has now changed
+        console.log('Print myclass after setting X')
         myclass.print()
     }
   </script>
@@ -34,5 +39,7 @@
 <body>
 <h1>Memory example</h1>
     Objects created in JavaScript are always passed by value into emscripten. Objects created in Emscripten observe the function signature and are treated as references if the parameter is a reference.
+
+    <br><a href="index.html">back to index</a>
 </body>
 </html>

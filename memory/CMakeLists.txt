@@ -15,7 +15,6 @@ add_custom_command(TARGET memory
     POST_BUILD
     COMMAND emcc
     -s ALLOW_MEMORY_GROWTH=1
-    -s EXTRA_EXPORTED_RUNTIME_METHODS="['stringToUTF8']" 
     --bind
     -s WASM=1
     libmemory.bc
