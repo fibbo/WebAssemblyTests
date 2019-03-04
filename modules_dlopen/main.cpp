@@ -6,44 +6,33 @@
 #include <emscripten.h>
 #include <emscripten/bind.h>
 
-extern void fillDataStructure(DataStruct& ds);
-extern DataStruct* getDataStructureFromModule();
+typedef void (*fillPtr)(DataStruct& ds);
 
-constexpr int SAMPLE = 200000;
-bool libLoaded = false;
+fillPtr dynLinkedFunc;
+void* libhandle;
 
-void loadLibrary()
+void loadDLL(std::string path)
 {
-    printf("loadLibrary\n");
-    EM_ASM({
-        loadDynamicLibrary('modules_advanced/bin/side_module.wasm')
-    });
-    // printf("loading library\n");
-    // dlopen(path.c_str(), RTLD_NOW);
+    libhandle = dlopen(path.c_str(), RTLD_NOW);
+    if (libhandle == nullptr)
+        printf("Failed to load %s: %s\n", path.c_str(), dlerror());
+
+    dynLinkedFunc = (fillPtr)dlsym(libhandle, "fillDataStructure");
+    if (dynLinkedFunc == nullptr)
+        printf("Failed to load function: %s\n", "fillDataStructure");
 }
 
-void loadLibrary2()
-{
-    printf("loadLibrary2\n");
-    EM_ASM({
-        loadDynamicLibrary('side_module.wasm')
-    });
-}
-
-void dlopenJS(std::string path)
-{
-    printf("dlopenJS\n");
-    void* libhandle = dlopen(path.c_str(), RTLD_NOW);
-}
-
-void interFunctionCalls(int sizeOfBitmap)
+void interFunctionCallsDlopen(int size, std::string path)
 {
     DataStruct ds;
     ds.is_knockout = true;
-    ds.bitmap = new unsigned char[sizeOfBitmap];
-    ds.length = sizeOfBitmap;
+    ds.bitmap = new unsigned char[size];
+    ds.length = size;
 
-    fillDataStructure(ds);
+    if (!libhandle)
+        loadDLL(path);
+
+    dynLinkedFunc(ds);
 
     for (int i = 0; i < ds.length; i++)
     {
@@ -55,34 +44,25 @@ void interFunctionCalls(int sizeOfBitmap)
     ds.bitmap = nullptr;
 }
 
-void runDataStructureTestAcrossModules()
+void interFunctionCallAgain(int size)
 {
-    EM_ASM_TIME('acrossModule');
-    for(size_t i = 0; i < SAMPLE; i++)
+    DataStruct ds;
+    ds.is_knockout = true;
+    ds.bitmap = new unsigned char[size];
+    ds.length = size;
+
+    assert(libhandle);
+
+    dynLinkedFunc(ds);
+
+    for (int i = 0; i < ds.length; i++)
     {
-        DataStruct* ds = getDataStructureFromModule();
-        // printf("%d\n", ds->length);
-        delete ds;
+        printf("ds.bitmap[%d]: %d\n", i, ds.bitmap[i]);
     }
-    EM_ASM_TIMEEND('acrossModule');
-}
 
-void runDataStructureTestWithinModule()
-{
-    EM_ASM_TIME('withinModule');
-    for(size_t i = 0; i < SAMPLE; i++)
-    {
-        DataStruct* ds = new DataStruct();
-        // printf("%d\n", ds->length);
-        delete ds;
-    }
-    EM_ASM_TIMEEND('withinModule');
-
-}
-
-DataStruct* createDataStruct()
-{
-    return new DataStruct;
+    printf("ds.is_knockout: %d\n", ds.is_knockout);
+    delete[] ds.bitmap;
+    ds.bitmap = nullptr;
 }
 
 int main()
@@ -92,10 +72,6 @@ int main()
 }
 
 EMSCRIPTEN_BINDINGS() {
-    emscripten::function("interFunctionCalls", &interFunctionCalls);
-    emscripten::function("runDataStructureTestWithinModule", &runDataStructureTestWithinModule);
-    emscripten::function("runDataStructureTestAcrossModules", &runDataStructureTestAcrossModules);
-    emscripten::function("loadLibrary", &loadLibrary);
-    emscripten::function("loadLibrary2", &loadLibrary2);
-    emscripten::function("dlopenJS", &dlopenJS);
+    emscripten::function("interFunctionCallsDlopen", &interFunctionCallsDlopen);
+    emscripten::function("interFunctionCallAgain", &interFunctionCallAgain);
 }

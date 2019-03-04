@@ -10,25 +10,35 @@
     {
         console.log('onruntimeinitialized')
         // Module.interFunctionCalls(2000)
-        FS.mkdir('/modules');
-        FS.mount(IDBFS, {}, '/modules');
-        FS.syncfs(true, function (err) {
-            if (!err) {
-                resolve();
-            } else {
-                reject("Failed to load IDBFS: " + err);
-            }
-        });
 
         Module.runDataStructureTestWithinModule()
         Module.runDataStructureTestAcrossModules()
+
+        Module.setSampleCount(500000);
+        Module.PointTestWithinModule();
+        Module.PointTestAcrossModule();
     }
   </script>
   <script type="text/javascript" src="modules_advanced/bin/main.js"></script>
 
 </head>
 <body>
-    <h1>Modules: Main Module and Side Module </h1>
-    The main module calls creates object DataStruct and calls a fillDataStructure from module. fillDataStructure then calls setBoolToFalse in module2. 
+    <h1>Modules: Dynamic Linking with Module.dynamicLibraries </h1>
+
+    Modules are loaded on page load by defining a list of module names (Module.dynamicLibraries = ['module1.wasm', 'module2.wasm']) that WASM will link once loaded.
+
+    <h2>Tests that are being run</h2>
+    <ol>
+      <li>withinModule: Create and delete 6000000 non-trivial objects in the main module</li>
+      <li>acrossModules: Create and delete 6000000 non-trivial objects in the side module</li>
+      <li> The following is once done purely in the main module and the second time all the function calls go into a side module. For example for creating the points
+          a function in side_module.wasm is called which returns a point.
+        <ol> 
+          <li>Create 500000 points with random coordinates between [0,1) for x and y and store them in a vector</li>
+          <li>Calculate distance between i-1 and i from i=1 to i=500000 and store results in another vector</li>
+          <li>Calculate average distance between the points and print result</li>
+        </ol>
+      </li>
+    </ol>
 </body>
 </html>

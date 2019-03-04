@@ -8,6 +8,20 @@
   <a href="memory.html">Memory</a> <br>
   <a href="copy.html">Copy (takes a while to load)</a><br>
   <a href="modules.html">Modules</a><br>
-  <a href="modules_advanced.html">Advanced Modules</a>
+  <a href="modules_advanced.html">Advanced Modules</a><br>
+  <a href="modules_dlopen.html">dlopen Modules</a><br>
+
+  <h1>General findings</h1>
+  <ul>
+    <li>Objects created on the JavaScript side passed to WASM are always copies. If an object has been created in WASM via a WASM function call from JavaScript the c/c++ concept
+      of passing by value or passing by reference hold.
+    </li>
+    <li>Allocating memory in JavaScript and passing it to the WASM memory is very slow and should not be done (also I don't think there is any need for it)</li>
+    <li>Side modules cannot contain the EM_ASM macro (not supported yet). E.g. our license key validation uses this macro -> Has to be in the main module (shouldn't be a problem)</li>
+    <li>Allocations and deallocations with new/delete respectively seem to about 20% slower if going across modules</li>
+    <li>Other functions with stack allocations and or move operations don't seem to suffer from the same and perform only with minor differences, the way going across modules
+      being a little bit slower.
+    </li>
+  </ul>
 </body>
 </html>

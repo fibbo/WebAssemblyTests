@@ -4,6 +4,7 @@
 extern void setBoolToFalse(DataStruct& ds);
 extern DataStruct* createDataStruct();
 
+extern "C" {
 void fillDataStructure(DataStruct& ds)
 {
     for (int i = 0; i < ds.length; i++)
@@ -17,4 +18,6 @@ void fillDataStructure(DataStruct& ds)
 DataStruct* getDataStructureFromModule()
 {
     return new DataStruct();
+}
+
 }

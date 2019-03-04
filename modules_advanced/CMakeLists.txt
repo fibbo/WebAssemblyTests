@@ -22,7 +22,7 @@ add_custom_command(TARGET main
     -s MAIN_MODULE=1
     -s EXPORT_ALL=1
     --bind
-    libmain.bc
+    -O2 libmain.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/main.js
 )
 
@@ -31,7 +31,7 @@ add_custom_command(TARGET side_module
     COMMAND emcc
     -s SIDE_MODULE=1
     -s EXPORT_ALL=1
-    libside_module.bc
+    -O2 libside_module.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/side_module.wasm
 )
 
@@ -40,7 +40,7 @@ add_custom_command(TARGET side_module2
     COMMAND emcc
     -s SIDE_MODULE=1
     -s EXPORT_ALL=1
-    libside_module2.bc
+    -O2 libside_module2.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/side_module2.wasm
 )
 
