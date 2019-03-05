@@ -11,7 +11,8 @@ typedef float (*ReturnFloatPtr)();
 
 ReturnFloatPtr ReturnFloat;
 
-void LoadDLL(std::string path) {
+void LoadDLL(std::string path) 
+{
   void* libhandle = dlopen(path.c_str(), RTLD_NOW);
   if (libhandle == nullptr)
   {
