@@ -10,17 +10,33 @@
     Module['onRuntimeInitialized'] = () =>
     {
         console.log('onruntimeinitialized');
-        Module.interFunctionCallsDlopen(2000, "side_module.wasm");
-        Module.interFunctionCallAgain(234);
+        Module.loadDLL('side_module.wasm')
+
+        Module.setSampleCount(6000000);
+        Module.NewDeleteMainModule();
+        Module.NewDeleteSideModule();
+        Module.NewMainDeleteSideModule();
+        Module.NewSideDeleteMainModule();
+
+        Module.setSampleCount(500000);
+        Module.PointTestAcrossModule();
+        Module.PointTestWithinModule();
     }
   </script>
   <script type="text/javascript" src="modules_dlopen/bin/main.js"></script>
 
 </head>
 <body>
-    <h1>Modules: Main Module and Side Module </h1>
-    The main module calls creates object DataStruct and calls a fillDataStructure from module. fillDataStructure then calls setBoolToFalse in module2. 
+    <h1>Modules: Dynamic Linking with dlopen </h1>
+    Using the dlopen/dlsym mechanism. This requires the .wasm module to be present in the emulated file system. One way is embedding these files directly into the main module. Another is using
+    the file packager provided by Emscripten which creates a .data file that is asynchronously loaded during startup via XHR request.
 
-    <a href="index.html">back to index</a>
+    <h2>Findings</h2>
+    <ul>
+      <li>Since dlopen depends on C-linkage only C types can be used - otherwise warnings will be generated. However it seems to work.</li>
+      <li>For a to me unknown reason a function loaded via dlopen cannot return a float value (double works)</li>
+      <li>Calling functions linked with dlopen/dlsym is comparable to using the linking mechanism described in <a href="modules_advanced.html">Dynamic Linking: Module.dynamicLibraries</a></li>
+    </ul>
+    <br><a href="index.html">back to index</a>
 </body>
 </html>

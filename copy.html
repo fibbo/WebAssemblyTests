@@ -40,8 +40,12 @@
 
 </head>
 <body>
-    <h1>Copy example</h1>
-    Compare performance of creating arrays in javascript, passing to emscripten and back to javascript vs creating arrays on the heap and work on the emscripten memory.
+    <h1>Copying Data</h1>
+    Testing the copy-performance of JS-Emscripten.
+    <ol>
+      <li>First case: Create a Uint8Array on the JavaScript heap and pass it to Emscripten as JavaScript value. This needs to be converted to a C++ vector and can then be manipulated</li>
+      <li>Second case: Create (malloc) an unsigned char* array on the Emscripten heap and manipulate it directly.</li>
+    </ol>
     <br><a href="index.html">back to index</a>
 
 </body>

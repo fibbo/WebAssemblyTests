@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script>
+    var Module = Module !== undefined ? Module : {}
+    Module['onRuntimeInitialized'] = () =>
+    {
+        console.log('onruntimeinitialized');
+        Module.LoadDLL('side_module.wasm')
+
+        Module.ReturnFloatTest();
+    }
+  </script>
+  <script type="text/javascript" src="return_float_dlopen/bin/main.js"></script>
+
+</head>
+<body>
+    <h1>Modules: Dynamic Linking with dlopen </h1>
+    The performance of dlopen is  
+
+    <h2>Findings</h2>
+    <ul>
+      <li>Since dlopen depends on C-linkage only C types can be used</li>
+    </ul>
+    <br><a href="index.html">back to index</a>
+</body>
+</html>
