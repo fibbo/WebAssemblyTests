@@ -8,7 +8,6 @@
 
 typedef float (*ReturnFloatPtr)();
 
-
 ReturnFloatPtr ReturnFloat;
 
 void LoadDLL(std::string path) 
