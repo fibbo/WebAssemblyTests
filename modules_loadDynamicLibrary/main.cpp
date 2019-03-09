@@ -18,6 +18,8 @@ extern float calcAverageModule(const std::vector<float>& distances);
 extern PointFactory getPointFactory();
 extern Point&& getPoint(PointFactory& pf);
 extern std::vector<float> DistanceBetweenNeighborsModule(std::vector<Point>& points);
+extern std::vector<double> getDoubleVector();
+extern std::vector<double>* getDoubleVectorPointer();
 
 int SAMPLE = 6000000;
 
@@ -189,6 +191,26 @@ void loadLib()
     });
 }
 
+void callLoadedFunction()
+{
+    std::vector<double> res = getDoubleVector();
+    printf("function in main.cpp\n");
+    for (const auto d : res)
+    {
+        printf("%f\n", d);
+    }
+}
+
+void callLoadedPointerFunction()
+{
+    auto pRes = getDoubleVectorPointer();
+    printf("function in main.cpp\n");
+    for (const auto d : *pRes)
+    {
+        printf("%f\n", d);
+    }
+}
+
 
 EMSCRIPTEN_BINDINGS() {
     emscripten::function("setSampleCount", &setSampleCount);
@@ -204,4 +226,6 @@ EMSCRIPTEN_BINDINGS() {
     emscripten::function("useClassFromModule", &useClassFromModule);
 
     emscripten::function("loadLib", &loadLib);
+    emscripten::function("callLoadedFunction", &callLoadedFunction);
+    emscripten::function("callLoadedPointerFunction", &callLoadedPointerFunction);
 }
