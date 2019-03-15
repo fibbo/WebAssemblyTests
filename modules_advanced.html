@@ -6,7 +6,7 @@
 
   <script>
     var Module = Module !== undefined ? Module : {};
-    Module.dynamicLibraries = ['modules_advanced/bin/side_module.wasm', 'modules_advanced/bin/side_module2.wasm'];
+    Module.dynamicLibraries = ['modules_advanced/output/side_module.wasm', 'modules_advanced/output/side_module2.wasm'];
     Module['onRuntimeInitialized'] = () =>
     {
         console.log('onruntimeinitialized');
@@ -22,7 +22,7 @@
         Module.PointTestAcrossModule();
     }
   </script>
-  <script type="text/javascript" src="modules_advanced/bin/main.js"></script>
+  <script type="text/javascript" src="modules_advanced/output/main.js"></script>
 
 </head>
 <body>

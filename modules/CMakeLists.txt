@@ -19,7 +19,7 @@ add_custom_command(TARGET main
     -s MAIN_MODULE=1
     --bind
     libmain.bc
-    -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/main.js
+    -o ${CMAKE_CURRENT_SOURCE_DIR}/output/main.js
 )
 
 add_custom_command(TARGET side_module
@@ -28,6 +28,6 @@ add_custom_command(TARGET side_module
     -s SIDE_MODULE=1
     -s EXPORT_ALL=1
     libside_module.bc
-    -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/side_module.wasm
+    -o ${CMAKE_CURRENT_SOURCE_DIR}/output/side_module.wasm
 )
 

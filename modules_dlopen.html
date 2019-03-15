@@ -6,7 +6,7 @@
 
   <script>
     var Module = Module !== undefined ? Module : {}
-    Module.dynamicLibraries = ['modules_dlopen/bin/side_module2.wasm']
+    Module.dynamicLibraries = ['modules_dlopen/output/side_module2.wasm']
     Module['onRuntimeInitialized'] = () =>
     {
         console.log('onruntimeinitialized');
@@ -19,11 +19,11 @@
         Module.NewSideDeleteMainModule();
 
         Module.setSampleCount(500000);
-        Module.PointTestAcrossModule();
         Module.PointTestWithinModule();
+        Module.PointTestAcrossModule();
     }
   </script>
-  <script type="text/javascript" src="modules_dlopen/bin/main.js"></script>
+  <script type="text/javascript" src="modules_dlopen/output/main.js"></script>
 
 </head>
 <body>

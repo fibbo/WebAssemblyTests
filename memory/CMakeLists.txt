@@ -18,7 +18,7 @@ add_custom_command(TARGET memory
     --bind
     -s WASM=1
     libmemory.bc
-    -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/memory.js
+    -o ${CMAKE_CURRENT_SOURCE_DIR}/output/memory.js
 )
 
 add_custom_command(TARGET datastruct
@@ -27,5 +27,8 @@ add_custom_command(TARGET datastruct
     -s SIDE_MODULE=1
     -s EXPORTED_FUNCTIONS="['_updateRefDataStruct', '_updateNoRefDataStruct']"
     libdatastruct.bc
-    -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/datastruct.wasm
+    -o ${CMAKE_CURRENT_SOURCE_DIR}/output/datastruct.wasm
     )
+
+add_custom_target(build-time-make-directory ALL
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/output)
