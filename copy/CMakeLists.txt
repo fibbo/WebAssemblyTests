@@ -15,6 +15,6 @@ add_custom_command(TARGET copy
     -s FORCE_FILESYSTEM=1
     --bind
     -O2 libcopy.bc
-    -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/copy.js
+    -o ${CMAKE_CURRENT_SOURCE_DIR}/output/copy.js
 )
 

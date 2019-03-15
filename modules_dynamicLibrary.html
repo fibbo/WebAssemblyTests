@@ -6,7 +6,7 @@
 
   <script>
     var Module = Module !== undefined ? Module : {};
-    Module.dynamicLibraries = ['modules_loadDynamicLibrary/bin/side_module.wasm', 'modules_loadDynamicLibrary/bin/side_module2.wasm'];
+    Module.dynamicLibraries = ['modules_loadDynamicLibrary/output/side_module.wasm', 'modules_loadDynamicLibrary/output/side_module2.wasm'];
     Module['onRuntimeInitialized'] = () =>
     {
         console.log('onruntimeinitialized');
@@ -17,7 +17,7 @@
     loadDynamicLibrary('libPdfViewerAPI_WASM.wasm', {loadAsync: true, global: true, nodelete: true}).then( () => console.log('ole'))
   }
   </script>
-  <script type="text/javascript" src="modules_loadDynamicLibrary/bin/main.js"></script>
+  <script type="text/javascript" src="modules_loadDynamicLibrary/output/main.js"></script>
 
 </head>
 <body>

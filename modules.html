@@ -6,7 +6,7 @@
 
   <script>
     var Module = Module !== undefined ? Module : {}
-    Module.dynamicLibraries = ['modules/bin/side_module.wasm']
+    Module.dynamicLibraries = ['modules/output/side_module.wasm']
     Module['onRuntimeInitialized'] = () =>
     {
         console.log('onruntimeinitialized')
@@ -16,7 +16,7 @@
         console.log(wasmArray)
     }
   </script>
-  <script type="text/javascript" src="modules/bin/main.js"></script>
+  <script type="text/javascript" src="modules/output/main.js"></script>
 
 </head>
 <body>

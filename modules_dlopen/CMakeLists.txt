@@ -20,11 +20,11 @@ add_custom_command(TARGET main
     -s ALLOW_MEMORY_GROWTH=1
     -s MAIN_MODULE=1
     -s EXPORT_ALL=1 # without this other modules cannot allocate memory
-    --embed-file ${CMAKE_SOURCE_DIR}/bin/side_module.wasm@/usr/lib/side_module.wasm
+    --embed-file ${CMAKE_SOURCE_DIR}/output/side_module.wasm@/usr/lib/side_module.wasm
     --pre-js ${CMAKE_SOURCE_DIR}/pre.js
     --bind
     -O2 libmain.bc
-    -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/main.js
+    -o ${CMAKE_CURRENT_SOURCE_DIR}/output/main.js
 )
 
 add_custom_command(TARGET side_module
@@ -34,7 +34,7 @@ add_custom_command(TARGET side_module
     # -s EXPORTED_FUNCTIONS="['_fillDataStructure']"
     -s EXPORT_ALL=1
     -O2 libside_module.bc
-    -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/side_module.wasm
+    -o ${CMAKE_CURRENT_SOURCE_DIR}/output/side_module.wasm
 )
 
 add_custom_command(TARGET side_module2
@@ -43,6 +43,10 @@ add_custom_command(TARGET side_module2
     -s SIDE_MODULE=1
     -s EXPORT_ALL=1
     -O2 libside_module2.bc
-    -o ${CMAKE_CURRENT_SOURCE_DIR}/bin/side_module2.wasm
+    -o ${CMAKE_CURRENT_SOURCE_DIR}/output/side_module2.wasm
 )
+
+
+add_custom_target(build-time-make-directory ALL
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/output)
 

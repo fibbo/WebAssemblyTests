@@ -187,7 +187,7 @@ void useClassFromModule()
 void loadLib()
 {
     EM_ASM({
-        loadDynamicLibrary('modules_loadDynamicLibrary/bin/dynamic.wasm', {loadAsync: true, global: true, nodelete: true}).then( () => console.log('ole'))
+        loadDynamicLibrary('modules_loadDynamicLibrary/output/dynamic.wasm', {loadAsync: true, global: true, nodelete: true}).then( () => console.log('ole'))
     });
 }
 
