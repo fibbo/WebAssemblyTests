@@ -29,6 +29,3 @@ add_custom_command(TARGET datastruct
     libdatastruct.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/output/datastruct.wasm
     )
-
-add_custom_target(build-time-make-directory ALL
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/output)

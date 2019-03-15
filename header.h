@@ -55,7 +55,7 @@ private:
 };
 
 
-
+#if 0
 #include <emscripten.h>
 #define EM_ASM_TIME(name)       EM_ASM( \
                                 console.time(name);\
@@ -64,4 +64,8 @@ private:
                                 console.timeEnd(name);\
                              )
 
+#else
+#define EM_ASM_TIME(name)
+#define EM_ASM_TIMEEND(name)
+#endif
 #endif

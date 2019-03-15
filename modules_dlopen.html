@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <link rel="stylesheet" href="css/styles.css">
-
+  <script type="text/javascript" src="timer.js"></script>
   <script>
     var Module = Module !== undefined ? Module : {}
     Module.dynamicLibraries = ['modules_dlopen/output/side_module2.wasm']
@@ -12,8 +12,12 @@
         console.log('onruntimeinitialized');
         Module.loadDLL('side_module.wasm')
 
+        Timer.start('A')
+        Timer.start('B')
         Module.setSampleCount(6000000);
+        Timer.end('B')
         Module.NewDeleteMainModule();
+        Timer.end('A')
         Module.NewDeleteSideModule();
         Module.NewMainDeleteSideModule();
         Module.NewSideDeleteMainModule();

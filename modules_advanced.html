@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <link rel="stylesheet" href="css/styles.css">
+  <script type="text/javascript" src="timer.js"></script>
 
   <script>
     var Module = Module !== undefined ? Module : {};
@@ -12,8 +13,12 @@
         console.log('onruntimeinitialized');
 
         Module.setSampleCount(6000000);
+        Timer.start('NewDeleteMainModule')
         Module.NewDeleteMainModule();
+        Timer.end('NewDeleteMainModule');
+        Timer.start('NewDeleteSideModule')
         Module.NewDeleteSideModule();
+        Timer.end('NewDeleteSideModule')
         Module.NewMainDeleteSideModule();
         Module.NewSideDeleteMainModule();
 

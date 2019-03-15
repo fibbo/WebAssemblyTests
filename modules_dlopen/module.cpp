@@ -6,7 +6,7 @@
 #include <emscripten.h>
 #include <emscripten/bind.h>
 
-#include "header.h"
+#include "../header.h"
 // defined in module2.cpp
 extern void setBoolToFalse(DataStruct& ds);
 

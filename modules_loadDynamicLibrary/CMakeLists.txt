@@ -54,10 +54,3 @@ add_custom_command(TARGET dynamic
     -O2 libdynamic.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/output/dynamic.wasm
 )
-
-
-add_custom_target(build-time-make-directory ALL
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/output)
-
-
-

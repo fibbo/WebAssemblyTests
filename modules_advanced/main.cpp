@@ -7,7 +7,7 @@
 #include <emscripten.h>
 #include <emscripten/bind.h>
 
-#include "header.h"
+#include "../header.h"
 
 
 // Definitions from other modules

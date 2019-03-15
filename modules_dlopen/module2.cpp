@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 
 void setBoolToFalse(DataStruct& ds)

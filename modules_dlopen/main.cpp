@@ -1,6 +1,6 @@
 
 #include <cstdio>
-#include "header.h"
+#include "../header.h"
 #include <dlfcn.h>
 
 #include <emscripten.h>

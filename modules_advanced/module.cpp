@@ -1,8 +1,9 @@
 #include <vector>
-#include "header.h"
 #include <cstdlib>
 #include <utility>
 #include <iostream>
+
+#include "../header.h"
 
 // defined in module2.cpp
 extern void setBoolToFalse(DataStruct& ds);
