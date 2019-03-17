@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="../css/styles.css">
+
+  <script>
+    var Module = Module !== undefined ? Module : {}
+    Module['onRuntimeInitialized'] = () =>
+    {
+        console.log('onruntimeinitialized');
+        Module.LoadDLL('side_module.wasm')
+
+        Module.ReturnFloatTest();
+    }
+  </script>
+  <script type="text/javascript" src="output/main.js"></script>
+
+</head>
+<body>
+    <h1>MWE return of float in dlopen linked function </h1>
+</body>
+</html>

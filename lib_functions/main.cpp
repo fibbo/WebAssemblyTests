@@ -23,7 +23,7 @@ void call_lib_functions()
 void loadLib()
 {
     EM_ASM({
-        loadDynamicLibrary('lib_functions/output/module.wasm', {loadAsync: true, global: true, nodelete: true}).then( () => { console.log('ole'); Module.loadedSideModule() } )
+        loadDynamicLibrary('output/module.wasm', {loadAsync: true, global: true, nodelete: true}).then( () => { console.log('ole'); Module.loadedSideModule() } )
     });
 }
 

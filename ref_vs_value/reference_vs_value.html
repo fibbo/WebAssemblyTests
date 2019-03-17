@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8"/>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="../css/styles.css">
   <script>
     var Module = Module !== undefined ? Module : {}
     Module['onRuntimeInitialized'] = () =>
@@ -33,13 +33,13 @@
         myclass.print()
     }
   </script>
-  <script type="text/javascript" src="ref_vs_value/output/refvsvalue.js"></script>
+  <script type="text/javascript" src="output/refvsvalue.js"></script>
 
 </head>
 <body>
 <h1>Pass by reference vs pass by value</h1>
 Objects created in JavaScript are always passed by value into emscripten. Objects created in Emscripten observe the function signature and are treated as references if the parameter is a reference.
 
-    <br><a href="index.html">back to index</a>
+    <br><a href="../index.html">back to index</a>
 </body>
 </html>
