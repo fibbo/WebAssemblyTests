@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8"/>
-  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="css/styles.css">
 
 </head>
 <body>
@@ -22,8 +22,15 @@
     <li>Side modules cannot contain the EM_ASM macro (not supported yet). E.g. our license key validation uses this macro -> Has to be in the main module (shouldn't be a problem)</li>
     <li>Allocations and deallocations with new/delete respectively seem to about 20% slower if going across modules</li>
     <li>Other functions with stack allocations and or move operations don't seem to suffer from the same and perform only with minor differences, the way going across modules
-      being a little bit slower.
-    </li>
+      being a little bit slower.</li>
+    <li>Template functions/classes work as well as long as we define template specialisations for the modules.</li>
+  </ul>
+
+  <h1>Recommendation</h1>
+  <ul>
+    <li>Use loadDynamicLibrary within an EM_ASM directive in C++ to load modules when needed</li>
+    <li>Use EXPORT_ALL=1 on the main module for now, until we know more</li>
+    <li></li>
   </ul>
 </body>
 </html>

@@ -23,12 +23,15 @@
 
 </head>
 <body>
-    <h1>Call Library Functions in Side module </h1>
+    <h1>Calling Library Functions (e.g. new/malloc/free) in Side Module </h1>
 
     <ol>
-        <li class="works">main wasm/js size with O2 and EXPORT_ALL=1: js: 1048 KB, wasm: 559 KB -> Total size = 1607 KB</li>
-        <li class="fails">main wasm/js size with O2 and EXPORT_ALL=0: js: 732 KB, wasm: 244 KB -> Total size =  976 KB</li>
+      <li class="works">main wasm/js size with O2 and EXPORT_ALL=1: js: 1048 KB, wasm: 559 KB -> Total size = 1607 KB</li>
+      <li class="fails">main wasm/js size with O2 and EXPORT_ALL=0: js: 732 KB, wasm: 244 KB -> Total size =  976 KB</li>
     </ol>
-    <a href="../index.html">back to index</a>
+
+    <h2>Findings</h2>
+    C library functions seem to work without exporting all functions from the main module. However using new in the side module fails.
+    <br><br><a href="../index.html">back to index</a>
   </body>
 </html>
