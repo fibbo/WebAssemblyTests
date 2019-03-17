@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script>
+    var Module = Module !== undefined ? Module : {};
+    Module['onRuntimeInitialized'] = () =>
+    {
+        console.log('onruntimeinitialized');
+        Module.loadLib();
+
+    }
+    
+
+    Module.loadedSideModule = () => {
+        Module.lib_functions();
+    }
+
+  </script>
+  <script type="text/javascript" src="lib_functions/output/main.js"></script>
+
+</head>
+<body>
+    <h1>Call Library Functions in Side module </h1>
+
+    <ol>
+        <li class="works">main wasm/js size with O2 and EXPORT_ALL=1: js: 1048 KB, wasm: 559 KB -> Total size = 1607 KB</li>
+        <li class="fails">main wasm/js size with O2 and EXPORT_ALL=0: js: 732 KB, wasm: 244 KB -> Total size =  976 KB</li>
+    </ol>
+    <a href="index.html">back to index</a>
+  </body>
+</html>

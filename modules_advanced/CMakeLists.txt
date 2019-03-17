@@ -43,8 +43,3 @@ add_custom_command(TARGET side_module2
     -O2 libside_module2.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/output/side_module2.wasm
 )
-
-
-add_custom_target(build-time-make-directory ALL
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/output)
-

@@ -55,7 +55,7 @@ private:
 };
 
 
-#if 0
+#if 1
 #include <emscripten.h>
 #define EM_ASM_TIME(name)       EM_ASM( \
                                 console.time(name);\

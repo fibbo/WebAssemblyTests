@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    var Module = Module !== undefined ? Module : {}
+    Module['onRuntimeInitialized'] = () =>
+    {
+        // create object in javascript and pass it to emscripten
+        var ds = { x: 4, y: 6, text: 'Initial text' }
+        Module.updateNoRefDataStruct(ds)
+        console.log(ds)
+
+        Module.updateRefDataStruct(ds)
+        console.log(ds)
+
+        // create object in emscripten and do things with it
+        var myclass = new Module.MyClass(4, "string member")
+        myclass.print()
+
+        // call function that takes MyClass object by value and thus copying it
+        console.log('Set x to 45. Passing myclass as value');
+        Module.setXNoRef(myclass, 45);
+        // print the x value of the object - should be unchanged
+        console.log('Print myclass after setting X')
+        myclass.print()
+        // call function that takes MyClass object by reference
+        console.log('Set x to 45. Passing myclass as reference');
+        Module.setXRef(myclass, 45)
+        // print the x value of the object - it has now changed
+        console.log('Print myclass after setting X')
+        myclass.print()
+    }
+  </script>
+  <script type="text/javascript" src="ref_vs_value/output/refvsvalue.js"></script>
+
+</head>
+<body>
+<h1>Pass by reference vs pass by value</h1>
+Objects created in JavaScript are always passed by value into emscripten. Objects created in Emscripten observe the function signature and are treated as references if the parameter is a reference.
+
+    <br><a href="index.html">back to index</a>
+</body>
+</html>
