@@ -1,0 +1,163 @@
+%! TEX program = lualatex
+\documentclass[10pt, a4paper]{beamer} %handout fuer eine gedruckte version der slides
+\usetheme{metropolis}
+
+\usepackage{url}
+\usepackage{polyglossia}
+\setmainlanguage{english}
+
+\usepackage{listings,xcolor}
+\usepackage{graphicx}
+\usepackage{nameref}
+\usepackage{mathtools}
+\usepackage{tikz}
+
+\usepackage{booktabs}
+
+\makeatletter
+\newcommand*{\currentname}{\@currentlabelname}
+\makeatother
+
+\usepackage{fontspec}
+\newfontfamily\Bera{Fira Code}[Scale=0.85]
+
+\setmonofont[
+  Contextuals={Alternate}
+]{Fira Code}
+
+
+\definecolor{pdfToolsBlue}{HTML}{0084C7}
+\definecolor{pdfToolsDarkBlue}{HTML}{004569}
+\definecolor{pdfToolsDarkerBlue}{HTML}{002A3F}
+\definecolor{pdfToolsRenderingOrange}{HTML}{E78B00}
+
+\definecolor{mDarkTeal}{HTML}{23373b}
+\definecolor{mLightBrown}{HTML}{EB811B}
+\definecolor{mDarkBlue}{HTML}{0F3470}
+\definecolor{mDarkGrey}{HTML}{999999}
+\definecolor{mLighterGrey}{HTML}{CCCCCC}
+\definecolor{mLightGrey}{rgb}{0.95,0.95,0.95}
+\definecolor{mLightBlue}{HTML}{212751}
+
+\newcommand{\lb}[1]{{\color{pdfToolsRenderingOrange}#1}}
+
+\newcommand{\bblock}[3]{
+        \begin{block}{#1}
+        #2
+    \end{block}
+}
+
+\setbeamercolor{block title}{fg=pdfToolsDarkBlue}
+\setbeamercolor{frametitle}{bg=pdfToolsBlue,fg=white}
+\setbeamercolor{normal text}{fg=black}
+
+\lstset{language=C++,
+    backgroundcolor=\color{mLightGrey},
+    frame=single,
+    rulecolor=\color{mLightGrey}, % make frame "invisible"
+    basicstyle=\Bera\tiny,
+    keywordstyle=\bfseries\color{mDarkBlue},
+    commentstyle=\color{mDarkGrey}\itshape,
+    captionpos=t,
+    emphstyle=\ttb\color{mDarkBlue},    % Custom highlighting style
+    stringstyle=\color{mLightBrown},
+    tabsize=2,
+    numberbychapter=false,
+    showstringspaces=false,
+    breaklines=true,
+    morekeywords={assert, break, class, continue, else, except, for, if, return, try, while}
+}
+%
+\makeatletter
+\setbeamertemplate{footline}{%
+\leavevmode
+\vbox{\begin{beamercolorbox}[dp=1.25ex,ht=2.75ex]{fg=black}%
+  \hspace*{1em}\insertsectionhead%
+  \ifx\insertsubsectionhead\@empty\relax\else\hspace*{\fill}\insertsubsectionhead\hspace*{2ex}\fi
+  \end{beamercolorbox}%
+  }%
+}
+\makeatother
+
+
+\newcommand{\itembullet}{
+    \tikz\draw[pdfToolsDarkerBlue,fill=pdfToolsDarkerBlue] (0,0) circle (.4ex);
+}
+
+\AtBeginSection{}
+
+\setbeamertemplate{section in toc}{%
+  {\color{mDarkTeal}\rule[0.3ex]{3pt}{3pt}}~\inserttocsection\par}
+\setbeamertemplate{subsection in toc}{%
+  \hspace{1.2em}{\color{mLightBrown}\rule[0.3ex]{3pt}{3pt}}~\inserttocsubsection\par}
+
+
+\setbeamertemplate{itemize item}{\itembullet}
+\setlength{\parskip}{4ex}
+
+\title % (optional, only for long titles)
+{Dynamic Loading of Modules in WASM/Emscripten}
+\author % (optional, for multiple authors)
+{Philipp Gloor}
+\date{}
+\titlegraphic{\raggedleft\includegraphics[width=0.2\textwidth]{img/logo-pdftools-c-200}}
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
+{
+  \setlength{\parskip}{0ex}
+\begin{frame}{Table of Contents}
+    \tableofcontents
+  \end{frame}
+}
+\section{Emscripten: Main Module, Side Modules}
+\begin{frame}[c, allowframebreaks]\frametitle{Emscripten: Main Module, Side Modules}
+  In order to be able to dynamically load a WASM file they need to be compiled with 
+  specific options.
+  
+  Following options can control how Emscripten creates the WebAssembly module:
+  \begin{itemize}
+    \item \texttt{-s MAIN\_MODULE}
+    \item \texttt{-s SIDE\_MODULE}
+  \end{itemize}
+
+  The differences between the main module and the side modules:
+\framebreak
+  \begin{itemize}
+    \item Main modules have the system libraries linked in
+    \item Side modules are pure wasm files that contain LLVM bitcode that have no system libraries
+    \item Compiling a main module adds a JavaScript file which sets up the Emscripten environment
+  \end{itemize}
+\end{frame}
+
+\section{Dynamic Loading}
+\begin{frame}[allowframebreaks]{Dynamic Loading}
+  Three different methods to dynamically link functions:
+
+  \begin{itemize}
+    \item dlopen/dlsym: Works the same as with native C code. Requires the side module to be available in the file system. Relies on C-Linkage or using mangled
+    C++ names. Obtain dll handle with \texttt{dlopen} and link the functions with \texttt{dlsym}
+    \item On startup: Define \texttt{Module.dynamicLibraries = [<list of wasm names>]}. Loads the wasm modules synchronously. Functions from modules need 
+    to be declared for compilation to work.
+    \item On demand: Use \texttt{EM\_ASM()} macro within C/C++.
+  \end{itemize}
+  \framebreak
+
+    Using \texttt{loadDynamicLibrary} from within C/C++ seems the best way
+
+    \begin{enumerate}
+      \item Loads WASM when really needed
+      \item Automatic linking (unlike dlopen)
+      \item Asynchronous
+    \end{enumerate}
+\end{frame}
+
+\section{Passing values: Reference or Value}
+\begin{frame}{Passing values: Reference or Value}
+
+\end{frame}
+
+\section{}
+\end{document}

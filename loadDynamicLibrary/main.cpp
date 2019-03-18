@@ -2,12 +2,12 @@
 #include <cstdio>
 #include <iostream>
 #include <vector>
-#include <dlfcn.h>
 
 #include <emscripten.h>
 #include <emscripten/bind.h>
 
 #include "../header.h"
+
 
 
 // Definitions from other modules
@@ -18,6 +18,8 @@ extern float calcAverageModule(const std::vector<float>& distances);
 extern PointFactory getPointFactory();
 extern Point&& getPoint(PointFactory& pf);
 extern std::vector<float> DistanceBetweenNeighborsModule(std::vector<Point>& points);
+extern std::vector<double> getDoubleVector();
+extern std::vector<double>* getDoubleVectorPointer();
 
 int SAMPLE = 6000000;
 
@@ -41,7 +43,6 @@ void NewDeleteMainModule()
         delete ds;
     }
     EM_ASM_TIMEEND('NewDeleteMainModule');
-
 }
 
 /**
@@ -182,6 +183,19 @@ void useClassFromModule()
     c.print();
 }
 
+void loadLib()
+{
+    EM_ASM({
+        loadDynamicLibrary('output/side_module.wasm', {loadAsync: true, global: true, nodelete: true}).then(
+            () => {
+                Module.modulePromiseResolve() 
+            });
+        loadDynamicLibrary('output/side_module2.wasm', {loadAsync: true, global: true, nodelete: true}).then(
+            () => {
+                Module.module2PromiseResolve()
+            });
+    });
+}
 
 EMSCRIPTEN_BINDINGS() {
     emscripten::function("setSampleCount", &setSampleCount);
@@ -195,4 +209,6 @@ EMSCRIPTEN_BINDINGS() {
     emscripten::function("PointTestWithinModule", &PointTestWithinModule);
 
     emscripten::function("useClassFromModule", &useClassFromModule);
+
+    emscripten::function("loadLib", &loadLib);
 }

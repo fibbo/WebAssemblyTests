@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="../css/styles.css">
+
+  <script>
+    var Module = Module !== undefined ? Module : {};
+
+    Module.modulePromise = new Promise( (resolve, reject) => {
+      Module.modulePromiseResolve = resolve
+      Module.modulePromiseReject = reject
+    });
+    Module.module2Promise = new Promise( (resolve, reject) => {
+      Module.module2PromiseResolve = resolve
+      Module.module2PromiseReject = reject
+    });
+    Module['onRuntimeInitialized'] = () =>
+    {
+        console.log('onruntimeinitialized');
+        Promise.all([Module.modulePromise, Module.module2Promise]).then(
+          () => {
+            console.log("all modules loaded");
+            runModuleFunctions();
+        })
+    }
+    runModuleFunctions = () => {
+      Module.setSampleCount(6000000);
+      Module.NewDeleteMainModule();
+      Module.NewDeleteSideModule();
+      Module.NewMainDeleteSideModule();
+      Module.NewSideDeleteMainModule();
+
+      Module.setSampleCount(500000);
+      Module.PointTestWithinModule();
+      Module.PointTestAcrossModule(); 
+    }
+  </script>
+  <script type="text/javascript" src="output/main.js"></script>
+
+</head>
+<body>
+    <h1>Dynamic Linking with loadDynamicLibrary</h1>
+
+    Real on the fly loading of wasm modules.
+
+    <ol>
+      <li>For each module we define a promise which we can resolve or reject later to inform whether the loading of the module was successful or not</li>
+      <li>Clicking the button calls Module.loadLib(). This is a function exposed via EMSCRIPTEN_BINDINGS</li>
+      <li>loadLib contains an EM_ASM statement which asynchronously loads the desired modules (the names of the modules are hardcoded into the loadLib function at the moment)</li>
+      <li>Each module that was loaded successfully will call the resolve function of the previously defined promise</li>
+      <li>Promise.all waits for all the listed promises to be resolved - this is the moment when we can safely call all functions knowing they have been loaded</li>
+    </ol>
+    <button onclick="Module.loadLib()">Load lib</button><br>
+    <button onclick="runModuleFunctions()">Run Module again</button><br>
+    <a href="../index.html">back to index</a>
+  </body>
+</html>

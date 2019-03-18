@@ -54,14 +54,4 @@ double CalcAverageModule(std::vector<double>& distances)
     return sum/distances.size();
 }
 
-/**
- * Implementation of the the class function print
- * Useable from the main_module
- */
-void ModuleClass::print()
-{
-    std::cout << text << "\t" << value << "\n";
-}
-
-
 }

@@ -57,11 +57,6 @@ void loadDLL(std::string path)
     DistanceBetweenNeighborsModule = (DistanceBetweenNeighborsModulePtr)dlsym(libhandle, "DistanceBetweenNeighborsModule");
     if (DistanceBetweenNeighborsModule == nullptr)
         printf("Failed to load function: %s\n", "DistanceBetweenNeighborsModule");
-
-    ModulePrint = (modulePrintPtr)dlsym(libhandle, "Module::print");
-    if (ModulePrint == nullptr)
-        printf("Failed to load function: %s\n", "Module::print");
-
 }
 
 int SAMPLE = 6000000;

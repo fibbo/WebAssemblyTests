@@ -2,13 +2,11 @@
 #include <cstdio>
 #include <iostream>
 #include <vector>
-#include <dlfcn.h>
 
 #include <emscripten.h>
 #include <emscripten/bind.h>
 
 #include "../header.h"
-
 
 
 // Definitions from other modules
@@ -19,8 +17,6 @@ extern float calcAverageModule(const std::vector<float>& distances);
 extern PointFactory getPointFactory();
 extern Point&& getPoint(PointFactory& pf);
 extern std::vector<float> DistanceBetweenNeighborsModule(std::vector<Point>& points);
-extern std::vector<double> getDoubleVector();
-extern std::vector<double>* getDoubleVectorPointer();
 
 int SAMPLE = 6000000;
 
@@ -185,33 +181,6 @@ void useClassFromModule()
     c.print();
 }
 
-void loadLib()
-{
-    EM_ASM({
-        loadDynamicLibrary('modules_loadDynamicLibrary/output/dynamic.wasm', {loadAsync: true, global: true, nodelete: true}).then( () => console.log('ole'))
-    });
-}
-
-void callLoadedFunction()
-{
-    std::vector<double> res = getDoubleVector();
-    printf("function in main.cpp\n");
-    for (const auto d : res)
-    {
-        printf("%f\n", d);
-    }
-}
-
-void callLoadedPointerFunction()
-{
-    auto pRes = getDoubleVectorPointer();
-    printf("function in main.cpp\n");
-    for (const auto d : *pRes)
-    {
-        printf("%f\n", d);
-    }
-}
-
 
 EMSCRIPTEN_BINDINGS() {
     emscripten::function("setSampleCount", &setSampleCount);
@@ -225,8 +194,4 @@ EMSCRIPTEN_BINDINGS() {
     emscripten::function("PointTestWithinModule", &PointTestWithinModule);
 
     emscripten::function("useClassFromModule", &useClassFromModule);
-
-    emscripten::function("loadLib", &loadLib);
-    emscripten::function("callLoadedFunction", &callLoadedFunction);
-    emscripten::function("callLoadedPointerFunction", &callLoadedPointerFunction);
 }
