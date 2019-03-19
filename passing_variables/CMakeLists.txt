@@ -6,6 +6,16 @@ set(datastruct_src datastruct)
 add_library(refvsvalue SHARED ${refvsvalue_src})
 add_library(datastruct SHARED ${datastruct_src})
 
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
+set(O_FLAG "-O2")
+
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_RELEASE ${O_FLAG})
+
 set_target_properties(
     refvsvalue
     datastruct

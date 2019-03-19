@@ -1,24 +1,34 @@
+#include <iostream>
+
 #include <emscripten.h>
 #include <emscripten/bind.h>
 
 void test_lib_functions();
 
-template<typename T>
-T* test_new();
-
-void createInt() {
-    int* pI = test_new<int>();
-    *pI = 230204;
-    printf("%d\n", *pI);
-    delete pI;
-}
+double* new_double(int size);   
 
 void call_lib_functions()
 {
     test_lib_functions();
-    createInt();
 }
 
+void call_side_new()
+{
+    std::cout << "call_side_new\n";
+    double* pD = new_double(9999999);
+    int dummy = 0;
+    for (int i = 0; i < 9999999; i++)
+    {
+        dummy += pD[i];
+    }
+    std::cout << dummy << "\n";
+}
+
+void call_new()
+{
+    double* pD = new double[1];
+    std::cout << pD[0] << "\n";
+}
 
 void loadLib()
 {
@@ -30,4 +40,6 @@ void loadLib()
 EMSCRIPTEN_BINDINGS() {
     emscripten::function("loadLib", &loadLib);
     emscripten::function("lib_functions", &call_lib_functions);
+    emscripten::function("call_new", &call_new);
+    emscripten::function("call_side_new", &call_side_new);
 }

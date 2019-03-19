@@ -1,5 +1,6 @@
 
 #include <cstdio>
+#include <iostream>
 #include "../header.h"
 #include <dlfcn.h>
 
@@ -74,14 +75,17 @@ void setSampleCount(int count)
 
 void NewDeleteMainModule()
 {
+    int dummy = 0;
+
     EM_ASM_TIME('NewDeleteMainModule');
-    for(size_t i = 0; i < SAMPLE; i++)
+    for(int i = 0; i < SAMPLE; i++)
     {
         DataStruct* ds = new DataStruct;
+        dummy += (int)ds->is_knockout;
         delete ds;
     }
+    std::cout << dummy << "\n";
     EM_ASM_TIMEEND('NewDeleteMainModule');
-
 }
 
 /**
@@ -91,7 +95,7 @@ void NewDeleteMainModule()
 void NewDeleteSideModule()
 {
     EM_ASM_TIME('NewDeleteSideModule');
-    for(size_t i = 0; i < SAMPLE; i++)
+    for(int i = 0; i < SAMPLE; i++)
     {
         DataStruct* ds = GetDataStructureFromModule();
         DeleteDataStructure(ds);
@@ -107,7 +111,7 @@ void NewDeleteSideModule()
 void NewMainDeleteSideModule()
 {
     EM_ASM_TIME('NewMainDeleteSideModule');
-    for(size_t i = 0; i < SAMPLE; i++)
+    for(int i = 0; i < SAMPLE; i++)
     {
         DataStruct* ds = new DataStruct;
         DeleteDataStructure(ds);
@@ -123,7 +127,7 @@ void NewMainDeleteSideModule()
 void NewSideDeleteMainModule()
 {
     EM_ASM_TIME('NewSideDeleteMainModule');
-    for(size_t i = 0; i < SAMPLE; i++)
+    for(int i = 0; i < SAMPLE; i++)
     {
         DataStruct* ds = GetDataStructureFromModule();
         delete ds;

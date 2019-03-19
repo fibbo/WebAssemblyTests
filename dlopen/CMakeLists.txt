@@ -8,6 +8,16 @@ add_library(main SHARED ${main_src})
 add_library(side_module SHARED ${module_src})
 add_library(side_module2 SHARED ${module2_src})
 
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
+set(O_FLAG "-O2")
+
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_RELEASE ${O_FLAG})
+
 set_target_properties(
     main
     side_module
@@ -23,7 +33,7 @@ add_custom_command(TARGET main
     --embed-file ${CMAKE_SOURCE_DIR}/output/side_module.wasm@/usr/lib/side_module.wasm
     --pre-js ${CMAKE_SOURCE_DIR}/pre.js
     --bind
-    -O2 libmain.bc
+    ${O_FLAG} libmain.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/output/main.js
 )
 
@@ -33,7 +43,7 @@ add_custom_command(TARGET side_module
     -s SIDE_MODULE=1
     # -s EXPORTED_FUNCTIONS="['_fillDataStructure']"
     -s EXPORT_ALL=1
-    -O2 libside_module.bc
+    ${O_FLAG} libside_module.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/output/side_module.wasm
 )
 
@@ -42,6 +52,6 @@ add_custom_command(TARGET side_module2
     COMMAND emcc
     -s SIDE_MODULE=1
     -s EXPORT_ALL=1
-    -O2 libside_module2.bc
+    ${O_FLAG} libside_module2.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/output/side_module2.wasm
 )

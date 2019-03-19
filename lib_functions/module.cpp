@@ -14,9 +14,11 @@ void test_lib_functions() {
     free(dst);
 }
 
-template<typename T>
-T* test_new() {
-    return new T;
+double* new_double(int size) {
+    double* d = new double[size];
+    for (int i = 0; i < size; i++)
+    {
+        d[i] = 1;
+    }
+    return d;
 }
-
-template int* test_new<int>();

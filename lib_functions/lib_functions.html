@@ -15,7 +15,9 @@
     
 
     Module.loadedSideModule = () => {
-        Module.lib_functions();
+      Module.call_new();
+      Module.lib_functions();
+      Module.call_side_new();
     }
 
   </script>
@@ -26,8 +28,8 @@
     <h1>Calling Library Functions (e.g. new/malloc/free) in Side Module </h1>
 
     <ol>
-      <li class="works">main wasm/js size with O2 and EXPORT_ALL=1: js: 1048 KB, wasm: 559 KB -> Total size = 1607 KB</li>
-      <li class="fails">main wasm/js size with O2 and EXPORT_ALL=0: js: 732 KB, wasm: 244 KB -> Total size =  976 KB</li>
+      <li class="works">main wasm/js size with O2 and EXPORT_ALL=1: js: 1812 KB, wasm: 1083 KB -> Total size = 2895 KB</li>
+      <li class="fails">main wasm/js size with O2 and EXPORT_ALL=0: js: 827 KB, wasm: 554 KB -> Total size =  1381 KB</li>
     </ol>
 
     <h2>Findings</h2>

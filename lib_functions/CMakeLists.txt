@@ -5,9 +5,6 @@ project(lib_functions)
 set(main_src main)
 set(module_src module)
 
-add_library(module SHARED ${module_src})
-add_library(main SHARED ${main_src})
-
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
@@ -18,6 +15,9 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE ${O_FLAG})
 
+add_library(module SHARED ${module_src})
+add_library(main SHARED ${main_src})
+
 set_target_properties(
     main
     module
@@ -25,10 +25,12 @@ set_target_properties(
 
 add_custom_command(TARGET main
     POST_BUILD
+    # COMMAND set \"EMCC_FORCE_STDLIBS=1\"
     COMMAND emcc
     -s ALLOW_MEMORY_GROWTH=1
-    -s ERROR_ON_UNDEFINED_SYMBOLS=0
     -s EXPORT_ALL=1
+    -s DEMANGLE_SUPPORT=1
+    -s ERROR_ON_UNDEFINED_SYMBOLS=0
     -s MAIN_MODULE=1
     --bind
     ${O_FLAG} libmain.bc
@@ -37,6 +39,7 @@ add_custom_command(TARGET main
 
 add_custom_command(TARGET module
     POST_BUILD
+    # COMMAND set "EMCC_FORCE_STDLIBS=0"
     COMMAND emcc
     -s EXPORT_ALL=1
     -s SIDE_MODULE=1

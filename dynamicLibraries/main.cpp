@@ -33,14 +33,17 @@ void setSampleCount(int count)
 
 void NewDeleteMainModule()
 {
+    int dummy = 0;
+
     EM_ASM_TIME('NewDeleteMainModule');
-    for(size_t i = 0; i < SAMPLE; i++)
+    for(int i = 0; i < SAMPLE; i++)
     {
         DataStruct* ds = new DataStruct;
+        dummy += (int)ds->is_knockout;
         delete ds;
     }
+    std::cout << dummy << "\n";
     EM_ASM_TIMEEND('NewDeleteMainModule');
-
 }
 
 /**
@@ -50,7 +53,7 @@ void NewDeleteMainModule()
 void NewDeleteSideModule()
 {
     EM_ASM_TIME('NewDeleteSideModule');
-    for(size_t i = 0; i < SAMPLE; i++)
+    for(int i = 0; i < SAMPLE; i++)
     {
         DataStruct* ds = getDataStructureFromModule();
         deleteDataStructure(ds);
@@ -66,7 +69,7 @@ void NewDeleteSideModule()
 void NewMainDeleteSideModule()
 {
     EM_ASM_TIME('NewMainDeleteSideModule');
-    for(size_t i = 0; i < SAMPLE; i++)
+    for(int i = 0; i < SAMPLE; i++)
     {
         DataStruct* ds = new DataStruct;
         deleteDataStructure(ds);
@@ -82,7 +85,7 @@ void NewMainDeleteSideModule()
 void NewSideDeleteMainModule()
 {
     EM_ASM_TIME('NewSideDeleteMainModule');
-    for(size_t i = 0; i < SAMPLE; i++)
+    for(int i = 0; i < SAMPLE; i++)
     {
         DataStruct* ds = getDataStructureFromModule();
         delete ds;

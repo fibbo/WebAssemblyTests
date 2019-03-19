@@ -18,7 +18,7 @@ add_custom_command(TARGET main
     --embed-file ${CMAKE_SOURCE_DIR}/output/side_module.wasm@/usr/lib/side_module.wasm
     --pre-js ${CMAKE_SOURCE_DIR}/pre.js
     --bind
-    -O2 libmain.bc
+    ${O_FLAG} libmain.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/output/main.js
 )
 

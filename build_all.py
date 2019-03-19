@@ -4,7 +4,7 @@ import sys
 
 basePath = "X:/pgl/WebAssemblyTests/"
 
-folders = ['copy', 'dynamicLibraries', 'dlopen', 'loadDynamicLibrary', 'lib_functions', 'passing_variables']
+folders = ['copy', 'dynamicLibraries', 'dlopen', 'loadDynamicLibrary', 'lib_functions', 'passing_variables', 'min_syslibs']
 
 for folder, n in zip(folders, range(len(folders))):
   print('#### {} BUILDING {}'.format(n+1, folder))

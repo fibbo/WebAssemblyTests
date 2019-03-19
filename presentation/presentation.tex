@@ -51,6 +51,21 @@
 \setbeamercolor{frametitle}{bg=pdfToolsBlue,fg=white}
 \setbeamercolor{normal text}{fg=black}
 
+\lstdefinestyle{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
 \lstset{language=C++,
     backgroundcolor=\color{mLightGrey},
     frame=single,
@@ -112,6 +127,15 @@
     \tableofcontents
   \end{frame}
 }
+
+\section{Interaction JavaScript <-> Emscripten}
+\begin{frame}{Passing values: Reference or Value}
+\begin{itemize}
+  \item Passing objects created in JavaScript into Emscripten copies the objects
+  \item Passing objects created within Emscripten via embind API obey the pass by value and pass by reference convention
+\end{itemize}
+\end{frame}
+
 \section{Emscripten: Main Module, Side Modules}
 \begin{frame}[c, allowframebreaks]\frametitle{Emscripten: Main Module, Side Modules}
   In order to be able to dynamically load a WASM file they need to be compiled with 
@@ -128,6 +152,7 @@
   \begin{itemize}
     \item Main modules have the system libraries linked in
     \item Side modules are pure wasm files that contain LLVM bitcode that have no system libraries
+    \item Side modules rely on the main module linking neede system library functions
     \item Compiling a main module adds a JavaScript file which sets up the Emscripten environment
   \end{itemize}
 \end{frame}
@@ -150,14 +175,69 @@
     \begin{enumerate}
       \item Loads WASM when really needed
       \item Automatic linking (unlike dlopen)
-      \item Asynchronous
+      \item Asynchronous loading of modules
     \end{enumerate}
 \end{frame}
 
-\section{Passing values: Reference or Value}
-\begin{frame}{Passing values: Reference or Value}
+\begin{frame}[fragile, allowframebreaks]{loadDynamicLibrary}
+  \begin{itemize}
+    \item C++/C function that loads the side modules asynchronously
+  \end{itemize}
+  \begin{lstlisting}{c++}
+void loadLib()
+{
+  EM_ASM({
+    loadDynamicLibrary('output/side_module.wasm', {loadAsync: true, global: true, nodelete: true}).then(
+      () => {
+        Module.modulePromiseResolve() 
+      });
+    loadDynamicLibrary('output/side_module2.wasm', {loadAsync: true, global: true, nodelete: true}).then(
+      () => {
+        Module.module2PromiseResolve()
+      });
+    loadDynamicLibrary('output/dynamic.wasm', {loadAsync: true, global: true, nodelete: true}).then(
+      () => {
+        Module.dynamicPromiseResolve()
+      });
+    });
+}
+  \end{lstlisting}  
 
+  \framebreak
+  \begin{itemize}
+    \item Define a promise for each module which the promise in the EM\_ASM call can resolve or reject
+  \end{itemize}
+
+  \begin{lstlisting}{JavaScript}
+Module.modulePromise = new Promise( (resolve, reject) => {
+  Module.modulePromiseResolve = resolve
+  Module.modulePromiseReject = reject
+});
+... // same for module2Pomise and dynamicPromise
+
+Module['onRuntimeInitialized'] = () =>
+{
+    console.log('onruntimeinitialized');
+    Promise.all([Module.modulePromise, Module.module2Promise, Module.dynamicPromise]).then(
+      () => {
+        console.log("all modules loaded");
+        runModuleFunctions();
+    })
+}
+  \end{lstlisting}
 \end{frame}
 
-\section{}
+
+
+\section{Performance for Calls Between Modules}
+\begin{frame}{Performance for Calls Between Modules}
+  \url{http://tofino/pgl/WebAssemblyTests}
+\end{frame}
+
+\begin{frame}{Notes}
+  \begin{itemize}
+    \item Development of Dynamic Linking is still ongoing and improvements are still to be expected: \\
+    \footnotesize{\url{https://github.com/emscripten-core/emscripten/projects/2}}
+  \end{itemize}
+\end{frame}
 \end{document}

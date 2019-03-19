@@ -15,10 +15,14 @@
       Module.module2PromiseResolve = resolve
       Module.module2PromiseReject = reject
     });
+    Module.dynamicPromise = new Promise( (resolve, reject) => {
+      Module.dynamicPromiseResolve = resolve;
+      Module.dynamicPromiseReject = reject;
+    })
     Module['onRuntimeInitialized'] = () =>
     {
         console.log('onruntimeinitialized');
-        Promise.all([Module.modulePromise, Module.module2Promise]).then(
+        Promise.all([Module.modulePromise, Module.module2Promise, Module.dynamicPromise]).then(
           () => {
             console.log("all modules loaded");
             runModuleFunctions();

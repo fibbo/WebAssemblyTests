@@ -36,12 +36,16 @@ void setSampleCount(int count)
 
 void NewDeleteMainModule()
 {
+    int dummy = 0;
+
     EM_ASM_TIME('NewDeleteMainModule');
-    for(size_t i = 0; i < SAMPLE; i++)
+    for(int i = 0; i < SAMPLE; i++)
     {
         DataStruct* ds = new DataStruct;
+        dummy += (int)ds->is_knockout;
         delete ds;
     }
+    std::cout << dummy << "\n";
     EM_ASM_TIMEEND('NewDeleteMainModule');
 }
 
@@ -51,12 +55,15 @@ void NewDeleteMainModule()
  */
 void NewDeleteSideModule()
 {
+    int dummy = 0;
     EM_ASM_TIME('NewDeleteSideModule');
-    for(size_t i = 0; i < SAMPLE; i++)
+    for(int i = 0; i < SAMPLE; i++)
     {
         DataStruct* ds = getDataStructureFromModule();
+        dummy += (int)ds->is_knockout;
         deleteDataStructure(ds);
     }
+    std::cout << dummy << "\n";
     EM_ASM_TIMEEND('NewDeleteSideModule');
 }
 
@@ -68,7 +75,7 @@ void NewDeleteSideModule()
 void NewMainDeleteSideModule()
 {
     EM_ASM_TIME('NewMainDeleteSideModule');
-    for(size_t i = 0; i < SAMPLE; i++)
+    for(int i = 0; i < SAMPLE; i++)
     {
         DataStruct* ds = new DataStruct;
         deleteDataStructure(ds);
@@ -84,7 +91,7 @@ void NewMainDeleteSideModule()
 void NewSideDeleteMainModule()
 {
     EM_ASM_TIME('NewSideDeleteMainModule');
-    for(size_t i = 0; i < SAMPLE; i++)
+    for(int i = 0; i < SAMPLE; i++)
     {
         DataStruct* ds = getDataStructureFromModule();
         delete ds;
@@ -194,7 +201,31 @@ void loadLib()
             () => {
                 Module.module2PromiseResolve()
             });
+        loadDynamicLibrary('output/dynamic.wasm', {loadAsync: true, global: true, nodelete: true}).then(
+            () => {
+                Module.dynamicPromiseResolve()
+            });
     });
+}
+
+void callLoadedFunction()
+{
+    std::vector<double> res = getDoubleVector();
+    printf("function in main.cpp\n");
+    for (const auto d : res)
+    {
+        printf("%f\n", d);
+    }
+}
+
+void callLoadedPointerFunction()
+{
+    auto pRes = getDoubleVectorPointer();
+    printf("function in main.cpp\n");
+    for (const auto d : *pRes)
+    {
+        printf("%f\n", d);
+    }
 }
 
 EMSCRIPTEN_BINDINGS() {
@@ -211,4 +242,6 @@ EMSCRIPTEN_BINDINGS() {
     emscripten::function("useClassFromModule", &useClassFromModule);
 
     emscripten::function("loadLib", &loadLib);
+    emscripten::function("callLoadedFunction", &callLoadedFunction);
+    emscripten::function("callLoadedPointerFunction", &callLoadedPointerFunction);
 }

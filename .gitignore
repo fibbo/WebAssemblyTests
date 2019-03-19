@@ -9,3 +9,11 @@ CMakeCache.txt
 *.wasm
 *.exe
 *.so
+*.aux
+*.nav
+*.out
+*.toc
+*.vrb
+*.log
+*.synctex.gz
+*.snm
