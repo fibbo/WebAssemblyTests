@@ -5,8 +5,8 @@
 #include <utility>
 
 struct Point {
-  float x;
-  float y;
+  double x;
+  double y;
 };
 
 struct DataStruct {
@@ -31,12 +31,12 @@ public:
     m_rng.seed(std::random_device()());
     m_dist = std::uniform_real_distribution<>(0, 1);
   }
-  Point&& createPoint()
+  Point createPoint()
   {
     Point p;
     p.x = m_dist(m_rng);
     p.y = m_dist(m_rng);
-    return std::move(p);
+    return p;
   }
 private:
   std::mt19937 m_rng;

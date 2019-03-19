@@ -33,7 +33,7 @@
 
     <h2>Tests that are being run</h2>
     <ol>
-      <li>NewDeleteMainModule: Create and delete 6'000'000 non-trivial objects in the main module</li>
+      <li>NewDeleteMainModule: Create and delete 6'000'000 non-trivial objects in the main module (+ some simple overhead from an addition to prevent code being optimised away)</li>
       <li>NewDeleteSideModule: Create and delete 6'000'000 non-trivial objects in the side module</li>
       <li>NewMainDeleteSideModule and NewSideDeleteMainModule: When mixing allocation and deletion in both modules</li>
       <li> The following is once done purely in the main module and the second time all the function calls go into a side module. For example for creating the points

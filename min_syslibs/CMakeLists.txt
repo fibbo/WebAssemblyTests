@@ -21,9 +21,10 @@ set_target_properties(
 
 add_custom_command(TARGET main
     POST_BUILD
+    COMMAND set \"EMCC_FORCE_STDLIBS=1\"
     COMMAND emcc
     -s MAIN_MODULE=1
-    -s EXPORTED_FUNCTIONS="['__Znwm']"
+    -s EXPORT_ALL=1
     --bind
     ${O_FLAG} libmain.bc
     -o ${CMAKE_CURRENT_SOURCE_DIR}/output/main.js
@@ -31,6 +32,7 @@ add_custom_command(TARGET main
 
 add_custom_command(TARGET module
     POST_BUILD
+    COMMAND set \"EMCC_FORCE_STDLIBS=0\"
     COMMAND emcc
     -v
     -s EXPORT_ALL=1

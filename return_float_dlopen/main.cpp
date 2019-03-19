@@ -6,7 +6,7 @@
 #include <emscripten/bind.h>
 #endif
 
-typedef float (*ReturnFloatPtr)();
+typedef double (*ReturnFloatPtr)();
 
 ReturnFloatPtr ReturnFloat;
 
@@ -28,7 +28,7 @@ void LoadDLL(std::string path)
 
 void ReturnFloatTest()
 {
-  float f = ReturnFloat();
+  double f = ReturnFloat();
   printf("%f\n", f);
   printf("%f\n", ReturnFloat());
 }

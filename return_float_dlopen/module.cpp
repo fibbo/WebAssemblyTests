@@ -1,6 +1,6 @@
 extern "C" {
 
-  float ReturnFloat()
+  double ReturnFloat()
   {
     return 10.4;
   }

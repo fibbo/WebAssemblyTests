@@ -5,12 +5,12 @@ using namespace emscripten;
 emscripten::val initVector(emscripten::val vector)
 {
     std::vector<unsigned char> vec = vector.isNull() ? std::vector<unsigned char>() : emscripten::vecFromJSArray<unsigned char>(vector);
-    for (int i = 0; i < vec.size(); i++)
+    for (size_t i = 0; i < vec.size(); i++)
     {
-        vec[i] = (unsigned char)23+(unsigned char)i;
+        vec[i] = 23+i;
     }
     emscripten::val value = emscripten::val::array();
-    for (int i = 0; i < vec.size(); ++i)
+    for (size_t i = 0; i < vec.size(); ++i)
         value.set(i, vec[i]);
     return value;
 }

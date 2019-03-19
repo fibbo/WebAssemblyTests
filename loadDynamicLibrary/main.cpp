@@ -13,11 +13,11 @@
 // Definitions from other modules
 extern DataStruct* getDataStructureFromModule();
 extern void deleteDataStructure(DataStruct* ds);
-extern float calcDistance2Module(const Point& p1, const Point& p2);
-extern float calcAverageModule(const std::vector<float>& distances);
+extern double calcDistance2Module(const Point& p1, const Point& p2);
+extern double calcAverageModule(const std::vector<double>& distances);
 extern PointFactory getPointFactory();
-extern Point&& getPoint(PointFactory& pf);
-extern std::vector<float> DistanceBetweenNeighborsModule(std::vector<Point>& points);
+extern Point getPoint(PointFactory& pf);
+extern std::vector<double> DistanceBetweenNeighborsModule(std::vector<Point>& points);
 extern std::vector<double> getDoubleVector();
 extern std::vector<double>* getDoubleVectorPointer();
 
@@ -100,14 +100,16 @@ void NewSideDeleteMainModule()
 }
 
 // Distance^2 between two points
-float calcDistance2(const Point& p1, const Point& p2)
+double calcDistance2(const Point& p1, const Point& p2)
 {
-    return (p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y);
+    double res = (p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y);
+    printf("%f\n", res);
+    return res;
 }
 
-std::vector<float> DistanceBetweenNeighbors(std::vector<Point>& points)
+std::vector<double> DistanceBetweenNeighbors(std::vector<Point>& points)
 {
-    std::vector<float> distances;
+    std::vector<double> distances;
     for (size_t i = 1; i < points.size(); i++)
     {
         distances.push_back(calcDistance2(points[i-1], points[i]));
@@ -115,9 +117,9 @@ std::vector<float> DistanceBetweenNeighbors(std::vector<Point>& points)
     return distances;
 }
 
-float calcAverage(const std::vector<float>& distances)
+double calcAverage(const std::vector<double>& distances)
 {
-    float sum = 0;
+    double sum = 0;
     for (auto d : distances)
     {
         sum += d;
@@ -137,12 +139,13 @@ void PointTestWithinModule()
     EM_ASM_TIME("createPoints");
     for(int i = 0; i < SAMPLE; i++)
     {
-        points.emplace_back(pf.createPoint());
+        points.push_back(pf.createPoint());
+        std::cout << points[i].x << " " << points[i].y << "\n";
     }
     EM_ASM_TIMEEND("createPoints");
 
     EM_ASM_TIME("calcDistance");
-    std::vector<float> distances;
+    std::vector<double> distances;
     distances = DistanceBetweenNeighbors(points);
     EM_ASM_TIMEEND("calcDistance");
 
@@ -164,12 +167,12 @@ void PointTestAcrossModule()
     EM_ASM_TIME("createPoints");
     for(int i = 0; i < SAMPLE; i++)
     {
-        points.emplace_back(getPoint(pf));
+        points.push_back(getPoint(pf));
     }
     EM_ASM_TIMEEND("createPoints");
 
     EM_ASM_TIME("calcDistance");
-    std::vector<float> distances;
+    std::vector<double> distances;
     distances = DistanceBetweenNeighborsModule(points);
     EM_ASM_TIMEEND("calcDistance");
 

@@ -29,14 +29,14 @@ Point&& getPoint(PointFactory& pf)
     return std::move(pf.createPoint());
 }
 
-float calcDistance2Module(const Point& p1, const Point& p2)
+double calcDistance2Module(const Point& p1, const Point& p2)
 {
     return (p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y);
 }
 
-std::vector<float> DistanceBetweenNeighborsModule(std::vector<Point>& points)
+std::vector<double> DistanceBetweenNeighborsModule(std::vector<Point>& points)
 {
-    std::vector<float> distances;
+    std::vector<double> distances;
     for (size_t i = 1; i < points.size(); i++)
     {
         distances.push_back(calcDistance2Module(points[i-1], points[i]));
@@ -44,7 +44,7 @@ std::vector<float> DistanceBetweenNeighborsModule(std::vector<Point>& points)
     return distances;
 }
 
-float calcAverageModule(const std::vector<float>& distances)
+double calcAverageModule(const std::vector<double>& distances)
 {
     double sum = 0;
     for (auto d : distances)
