@@ -24,9 +24,9 @@ PointFactory getPointFactory()
     return PointFactory();
 }
 
-Point&& getPoint(PointFactory& pf)
+Point getPoint(PointFactory& pf)
 {
-    return std::move(pf.createPoint());
+    return pf.createPoint();
 }
 
 double calcDistance2Module(const Point& p1, const Point& p2)

@@ -102,9 +102,7 @@ void NewSideDeleteMainModule()
 // Distance^2 between two points
 double calcDistance2(const Point& p1, const Point& p2)
 {
-    double res = (p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y);
-    printf("%f\n", res);
-    return res;
+    return (p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y);
 }
 
 std::vector<double> DistanceBetweenNeighbors(std::vector<Point>& points)
@@ -140,7 +138,6 @@ void PointTestWithinModule()
     for(int i = 0; i < SAMPLE; i++)
     {
         points.push_back(pf.createPoint());
-        std::cout << points[i].x << " " << points[i].y << "\n";
     }
     EM_ASM_TIMEEND("createPoints");
 

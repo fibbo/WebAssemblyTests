@@ -2,7 +2,7 @@ import subprocess
 import os
 import sys
 
-basePath = "X:/pgl/WebAssemblyTests/"
+basePath = os.getcwd()
 
 folders = ['copy', 'dynamicLibraries', 'dlopen', 'loadDynamicLibrary', 'lib_functions', 'passing_variables', 'min_syslibs']
 

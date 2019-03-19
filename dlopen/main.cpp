@@ -16,10 +16,6 @@ typedef std::vector<double> (*DistanceBetweenNeighborsModulePtr)(std::vector<Poi
 typedef void (*modulePrintPtr)();
 typedef double (*Return10Ptr)();
 
-typedef Point (*MakePointPtr)();
-typedef void (*PassVectorFloatPtr)(std::vector<double>&);
-typedef std::vector<double> (*ReturnVectorFloatPtr)();
-
 void* libhandle;
 getDataStructureFromModulePtr GetDataStructureFromModule;
 deleteDataStructurePtr DeleteDataStructure;
