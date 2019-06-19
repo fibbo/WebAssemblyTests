@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="../css/styles.css">
+
+  <script>
+    doonclick = function(event) {
+      worker.postMessage('http://tofino.pdf-tools.com/pdfviewer/pdf/8kPages.pdf')
+    }
+    var worker = new Worker('worker.js')
+  </script>
+<!-- <script type="text/javascript" src=".js"></script> -->
+</head>
+<body>
+  <h1>fetch api</h1>
+  <button onclick=doonclick(event)>GREAT BUTTON</button>
+</body>
+</html>
