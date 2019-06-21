@@ -13,6 +13,7 @@
   TODO: As it is, there doesn't seem to be a way to retrieve the total file size
   with a HEAD request, since the totalBytes member contains the bytes of the response
   body - which is 0 in a HEAD request - instead of the Content-Length.
+  Should be fixed with the next release: https://github.com/emscripten-core/emscripten/issues/8841#issuecomment-504418199
  */
 
 #include <cstdio>
