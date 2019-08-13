@@ -7,6 +7,7 @@
 #include <emscripten/bind.h>
 
 #include "../header.h"
+// #include "bsecoll.h"
 
 
 // Definitions from other modules
@@ -184,6 +185,15 @@ void useClassFromModule()
     c.print();
 }
 
+// void buffer_test() {
+//     CBasicArray<ModuleClass*> buffer;
+//     buffer.Add(new ModuleClass);
+//     for (int i = 0; i < buffer.GetSize(); i++)
+//     {
+//         printf("mem loc: %p\n", buffer[i]);
+//     }
+// }
+
 
 EMSCRIPTEN_BINDINGS() {
     emscripten::function("setSampleCount", &setSampleCount);
@@ -197,4 +207,5 @@ EMSCRIPTEN_BINDINGS() {
     emscripten::function("PointTestWithinModule", &PointTestWithinModule);
 
     emscripten::function("useClassFromModule", &useClassFromModule);
+    // emscripten::function("buffer_test", &buffer_test);
 }

@@ -21,3 +21,4 @@ CMakeCache.txt
 emscripten_fetch/emscripten_fetch.js
 emscripten_fetch/emscripten_fetch.worker.js
 emscripten_fetch/emscripten_fetch.js
+emscripten_cache/
